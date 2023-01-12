@@ -1,0 +1,6 @@
+// It's good that this line is wrapped to maintain the 100 char line limit, but the continued line should 
+// be indented at least 1 indentation level.
+public static void method1(String param1, String param2, String param3,
+String param4, String param5) {
+    ...
+}
