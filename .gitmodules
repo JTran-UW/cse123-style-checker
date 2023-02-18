@@ -1,0 +1,3 @@
+[submodule "checkstyle"]
+	path = checkstyle
+	url = https://github.com/ProfJAT/checkstyle.git

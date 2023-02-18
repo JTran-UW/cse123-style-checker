@@ -1,15 +1,15 @@
-from .checks.Check import Check
-from .checks.Checks import *
 from typing import *
+import subprocess
 
 class Checker:
     """
-    Checker TODO
+    File Checker, evaluates file on all registered checks
+
+    :param file: open read-permissioned file object
     """
-    def __init__(self, file: TextIO):
-        self.file: TextIO = file
-        self.registered_checks: list[Check] = [LineLengthCheck()]
-        self.evaluation: Dict[int, list[str]] = self._evaluate_file(file)
+    def __init__(self, checkstyle_jar: str, config: str):
+        self.checkstyle_jar = checkstyle_jar
+        self.config = config
     
     """
     Evaluate a file line-by-line with all registered checks
@@ -17,18 +17,15 @@ class Checker:
     :param file: file to evaluate
     :returns: mapping of line number to issue messages
     """
-    def _evaluate_file(self, file: TextIO) -> Dict[int, list[str]]:
-        issues: Dict[int, list[str]] = {}
-
-        for n, line in enumerate(file):
-            for check in self.registered_checks:
-                # Check validity of line
-                if not check.evaluate_line(line):
-                    if n in issues.keys():
-                        issues[n].append(check.message)
-                    else:
-                        issues[n] = [check.message]
+    def _evaluate_file(self, file: str) -> None:
+        result = subprocess.run(["java", "-jar", "checkstyle-10.7.0-all.jar", "-c", "sun_checks.xml", "Othello.java"])
         
-        return issues
 
 
+"""
+import os
+
+import subprocess
+test = subprocess.run(["java", "-jar", "checkstyle-10.7.0-all.jar", "-c", "sun_checks.xml", "Othello.java"])
+print(test)
+"""
