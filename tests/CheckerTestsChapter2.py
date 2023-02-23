@@ -1,18 +1,13 @@
-import unittest
-from src.Checker import Checker
-from src.checks.Checks import *
+from .BaseCheckerTest import BaseCheckerTest
 
-class CheckerTestsChapter2(unittest.TestCase):
-    PROGRAMS_PATH = "tests/sample_programs/2"
+class CheckerTestsChapter2(BaseCheckerTest):
+    CHAPTER_NUM = 2
 
     """
     Test the Wildcard Input Checker, Check 2.1.1
     """
     def test_wildcard_input_checker_success(self):
-        with open(f"{self.PROGRAMS_PATH}/NoWildcardImport.java") as f:
-            actual = Checker(f).evaluation
-        
-        expected = {
-            0: [WildcardInputCheck().message]
-        }
-        self.assertEqual(actual, expected)
+        self.base_test_check_success(
+            f"{self.CHAPTER_NUM}/NoWildcardImport.java",
+            [f"[ERROR] {self.TEST_FILE_PATH}:1:17: import.starImport [StarImport]"]
+        )
