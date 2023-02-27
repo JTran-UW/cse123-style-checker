@@ -1,6 +1,5 @@
 async function runChecks() {
     showLoading();
-    console.log("run");
     fetch("http://127.0.01:8000", {
         method: "POST",
         headers: {
@@ -11,13 +10,12 @@ async function runChecks() {
         })
     })
         .then((response) => response.json())
-        .then((data) => parseErrorMessages(data.messages))
-        .catch(function(error) {
-            hideLoading();
-            if (error.response == 422) {
-                console.log("Oops");
+        .then((data) => {
+            if (data.detail) {
+                hideLoading();
+                raiseInvalidInput();
             } else {
-                console.log("something else");
+                parseErrorMessages(data.messages);
             }
         });
 }
@@ -25,6 +23,7 @@ async function runChecks() {
 async function parseErrorMessages(errorMessages) {
     hideLoading();
     clearErrorMessages();
+    console.log(errorMessages);
 
     if (errorMessages.length == 0) {
         createErrorWindowMessage(
@@ -50,9 +49,10 @@ async function parseErrorMessages(errorMessages) {
     }
 }
 
-async function createErrorWindowMessage(label, body) {
+async function createErrorWindowMessage(label, body, color="black") {
     const errorWindowMessage = document.createElement("section");
     errorWindowMessage.classList.add("error");
+    errorWindowMessage.style.color = color;
 
     const errorLabel = document.createElement("h3");
     errorLabel.innerHTML = label;
@@ -73,12 +73,20 @@ async function clearErrorMessages() {
     }
 }
 
+async function raiseInvalidInput() {
+    clearErrorMessages();
+
+    createErrorWindowMessage(
+        "Invalid input!",
+        "Your code could not be parsed",
+        color="red"
+    );
+}
+
 async function showLoading() {
     document.getElementById("load").classList.remove("hidden");
-    document.getElementById("load").classList.remove("fade-in");
 }
 
 async function hideLoading() {
     document.getElementById("load").classList.add("hidden");
-    document.getElementById("load").classList.add("fade-in");
 }

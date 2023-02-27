@@ -143,3 +143,7 @@ body {
 .hidden {
     display: none;
 }
+
+.make-red {
+    color: red;
+}
