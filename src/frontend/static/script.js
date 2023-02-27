@@ -1,4 +1,5 @@
 async function runChecks() {
+    showLoading();
     console.log("run");
     fetch("http://127.0.01:8000", {
         method: "POST",
@@ -12,6 +13,7 @@ async function runChecks() {
         .then((response) => response.json())
         .then((data) => parseErrorMessages(data.messages))
         .catch(function(error) {
+            hideLoading();
             if (error.response == 422) {
                 console.log("Oops");
             } else {
@@ -21,9 +23,10 @@ async function runChecks() {
 }
 
 async function parseErrorMessages(errorMessages) {
+    hideLoading();
     clearErrorMessages();
 
-    if (errorMessages.length) {
+    if (errorMessages.length == 0) {
         createErrorWindowMessage(
             "No Errors Found!",
             "Your code looks good."
@@ -68,4 +71,14 @@ async function clearErrorMessages() {
     for (let i = errors.length-1; i >= 0; i--) {
         errors[i].remove();
     }
+}
+
+async function showLoading() {
+    document.getElementById("load").classList.remove("hidden");
+    document.getElementById("load").classList.remove("fade-in");
+}
+
+async function hideLoading() {
+    document.getElementById("load").classList.add("hidden");
+    document.getElementById("load").classList.add("fade-in");
 }

@@ -7,22 +7,31 @@
         <script type="text/javascript" src="static/script.js"></script>
     </head>
     <body>
-        <section id="header" class="main-section">
-            <h1>CSE 123 Style Checker</h1>
-        </section>
-
-        <section id="error-window" class="main-section">
-            <h2>Errors</h2>
-
-            <section class="error">
-                <h3>No Errors Found!</h3>
-                <p>Your code looks good.</p>
+        <div id="main">
+            <section id="header" class="main-section">
+                <h1>CSE 123 Style Checker</h1>
             </section>
-        </section>
 
-        <div id="code-editor" class="main-section">
-            <textarea id="text"></textarea>
-            <button id="run-checks" onclick="runChecks()">Run</button>
+            <section id="error-window" class="main-section">
+                <h2>Errors</h2>
+
+                <section class="error">
+                    <h3>No Errors Found!</h3>
+                    <p>Your code looks good.</p>
+                </section>
+            </section>
+
+            <div id="code-editor" class="main-section">
+                <textarea id="text"></textarea>
+                <button id="run-checks" onclick="runChecks()">Run</button>
+            </div>
+        </div>
+
+        <div id="load" class="hidden">
+            <div id="load-window">
+                <h2>Running checks...</h2>
+                <img src="static/loadingball.gif" height="100px" alt="loading" />
+            </div>
         </div>
     </body>
 </html>

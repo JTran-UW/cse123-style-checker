@@ -48,8 +48,8 @@ async def root(file: File):
     print(result)
 
     os.remove("temp.java")
-
+    """
     if len(result.stderr) > 0:
         raise HTTPException(status_code=422, detail="Provided file could not be parsed.")
-
+    """
     return {"messages": parse_error_out(result.stdout.decode())}

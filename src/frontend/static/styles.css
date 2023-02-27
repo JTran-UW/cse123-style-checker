@@ -1,6 +1,16 @@
 body {
-    display: grid;
     margin: 0px;
+    position: relative;
+    z-index: 1;
+}
+
+* {
+    font-family: 'Inter';
+    font-size: 24px;
+}
+
+#main {
+    display: grid;
     min-height: 100vh;
 
     grid-template-columns: 1fr 1fr;
@@ -8,11 +18,6 @@ body {
     grid-template-areas: 
         "header header"
         "error-window code-editor"
-}
-
-* {
-    font-family: 'Inter';
-    font-size: 24px;
 }
 
 .main-section {
@@ -32,6 +37,37 @@ body {
 #header h1 {
     font-size: 36px;
 }
+
+/**
+* Loading styles
+*/
+
+#load {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    transition: 0.3s;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+#load-window {
+    background-color: white;
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 100px;
+    text-align: center;
+    border: 4px solid black;
+}
+
+/**
+* Error window
+*/
 
 #error-window {
     grid-area: error-window;
@@ -98,4 +134,12 @@ body {
 
 #run-checks:hover {
     background-color: #dedede;
+}
+
+/**
+* Animations
+*/
+
+.hidden {
+    display: none;
 }
