@@ -1,4 +1,4 @@
-# cse123-style-checker
+# CSE 123 Style Checker
 Automated Code Style Checker for UW CSE 123
 
 This project requires Python 3.6+ and Java 11.
