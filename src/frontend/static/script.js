@@ -15,7 +15,7 @@ async function runChecks() {
                 hideLoading();
                 raiseInvalidInput();
             } else {
-                parseErrorMessages(data.messages);
+                parseErrorMessages(data.errors);
             }
         });
 }
@@ -32,18 +32,10 @@ async function parseErrorMessages(errorMessages) {
         )
     } else {
         for (const i in errorMessages) {
-            let specs = errorMessages[i].split(":", 4);
-            let line = specs[1];
-            let column = specs[2];
-
-            let error = specs[3].trim().split("[");
-            let errorType = error[error.length - 1];
-            errorType = errorType.substring(0, errorType.length - 1);
-            let message = error.slice(0, error.length - 1);
-
+            let error = errorMessages[i];
             createErrorWindowMessage(
-                errorType + " Error at " + line + ":" + column,
-                message    
+                error.type + " Error at " + error.line + ":" + error.col,
+                error.message    
             );
         }
     }

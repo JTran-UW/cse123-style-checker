@@ -32,7 +32,14 @@ def parse_error_out(error: str):
     error_list = []
 
     for e in error.strip().split("\n"):
-        error_list.append(e)
+        e_specs = {}
+
+        _, e_specs["line"], e_specs["col"], message = e.split(":", 3)
+        split_message = message.split("[")
+        e_specs["type"] = split_message[-1][:-1]
+        e_specs["message"] = "".join(split_message[:-1]).strip()
+
+        error_list.append(e_specs)
     
     return error_list
 
@@ -52,4 +59,4 @@ async def root(file: File):
     if result.stderr.decode()[:20] != "Checkstyle ends with":
         raise HTTPException(status_code=422, detail="Provided file could not be parsed.")
     
-    return {"messages": parse_error_out(result.stdout.decode())}
+    return {"errors": parse_error_out(result.stdout.decode())}
