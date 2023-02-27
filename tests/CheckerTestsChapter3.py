@@ -78,9 +78,43 @@ class CheckerTestsChapter3(BaseCheckerTest):
     def test_array_spacing_check_success(self):
         self.base_test_check_success(
             f"{self.CHAPTER_NUM}/BadArraySpacing.java",
+            [f"[ERROR] {self.TEST_FILE_PATH}:3:38: ',' is not followed by whitespace. [WhitespaceAfter]"]
+        )
+    
+    """
+    Test variable initialization spacing checks, Check 3.2.6
+    """
+    def test_variable_spacing_check_success(self):
+        self.base_test_check_success(
+            f"{self.CHAPTER_NUM}/BadVariableSpacing.java",
             [
-                ""
-            ] # TODO: Finish this one
+                f"[ERROR] {self.TEST_FILE_PATH}:3:23: '=' is not followed by whitespace. [WhitespaceAround]",
+                f"[ERROR] {self.TEST_FILE_PATH}:3:23: '=' is not preceded with whitespace. [WhitespaceAround]",
+                f"[ERROR] {self.TEST_FILE_PATH}:4:29: ';' is preceded with whitespace. [NoWhitespaceBefore]"
+            ]
+        )
+    
+    """
+    Test expression spacing checks, Check 3.2.7
+    """
+    def test_expression_spacing_check_success(self):
+        self.base_test_check_success(
+            f"{self.CHAPTER_NUM}/BadExpressionSpacing.java",
+            [
+                f"[ERROR] {self.TEST_FILE_PATH}:3:18: '*' is not preceded with whitespace. [WhitespaceAround]",
+                f"[ERROR] {self.TEST_FILE_PATH}:3:28: '-' is not followed by whitespace. [WhitespaceAround]",
+                f"[ERROR] {self.TEST_FILE_PATH}:4:31: '&&' is not preceded with whitespace. [WhitespaceAround]",
+                f"[ERROR] {self.TEST_FILE_PATH}:4:39: '||' is not preceded with whitespace. [WhitespaceAround]"
+            ]
+        )
+    
+    """
+    Test newline before method comment checks, Check 3.2.8
+    """
+    def test_method_comment_spacing_check_success(self):
+        self.base_test_check_success(
+            f"{self.CHAPTER_NUM}/BadMethodCommentSpacing.java",
+            [f"[ERROR] {self.TEST_FILE_PATH}:8:5: 'METHOD_DEF' should be separated from previous line. [EmptyLineSeparator]"]
         )
 
     """

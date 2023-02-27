@@ -15,6 +15,6 @@ class BaseCheckerTest(unittest.TestCase):
             })).text)
         
         expected = {
-            "message": messages
+            "messages": messages
         }
         self.assertEqual(actual, expected)

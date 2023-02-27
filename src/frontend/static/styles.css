@@ -1,0 +1,101 @@
+body {
+    display: grid;
+    margin: 0px;
+    min-height: 100vh;
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content auto;
+    grid-template-areas: 
+        "header header"
+        "error-window code-editor"
+}
+
+* {
+    font-family: 'Inter';
+    font-size: 24px;
+}
+
+.main-section {
+    border: 4px solid black;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#header {
+    grid-area: header;
+    justify-self: center;
+    border-bottom: 0px;
+    padding: 10px;
+    text-align: center;
+}
+
+#header h1 {
+    font-size: 36px;
+}
+
+#error-window {
+    grid-area: error-window;
+    border-right: 0px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#error-window > * {
+    padding: 5px 25px;
+}
+
+#error-window h2 {
+    font-size: 32px;
+}
+
+#code-editor {
+    grid-area: code-editor;
+    display: block;
+}
+
+.error {
+    transition: 0.3s;
+}
+
+.error:hover {
+    background-color: #dedede;
+}
+
+/**
+* Code editor
+*/
+
+#code-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+#text {
+    outline: none;
+    resize: none;
+    border-radius: 0px;
+    margin: 0px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    border: 0px;
+    font-size: 24px;
+}
+
+#run-checks {
+    border: none;
+    border-top: 4px solid black;
+    background-color: white;
+    transition: 0.3s;
+    outline: none;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 15px;
+    cursor: pointer;
+}
+
+#run-checks:hover {
+    background-color: #dedede;
+}

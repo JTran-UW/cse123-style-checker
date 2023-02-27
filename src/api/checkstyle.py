@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import subprocess
@@ -13,6 +14,17 @@ CS_CHECK_PATH = os.getcwd() + "/checkstyle/src/main/resources/"
 CS_CHECK_NAME = "cse123_checks.xml"
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 def parse_error_out(error: str):
     error = error.replace("Starting audit...", "")
@@ -37,4 +49,7 @@ async def root(file: File):
 
     os.remove("temp.java")
 
-    return {"message": parse_error_out(result.stdout.decode())}
+    if len(result.stderr) > 0:
+        raise HTTPException(status_code=422, detail="Provided file could not be parsed.")
+
+    return {"messages": parse_error_out(result.stdout.decode())}
