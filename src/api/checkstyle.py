@@ -27,21 +27,34 @@ app.add_middleware(
 
 
 def parse_error_out(error: str):
-    error = error.replace("Starting audit...", "")
+    error = error.replace("Starting audit...\n", "")
     error = error.replace("Audit done.\n", "")
+    error = error.strip().split("\n")
+    if "" in error:
+        error.remove("")
+
     error_list = []
 
-    for e in error.strip().split("\n"):
+    for e in error:
         e_specs = {}
 
-        _, e_specs["line"], e_specs["col"], message = e.split(":", 3)
+        # For line type messages
+        if e.count(":") == 2:
+            _, e_specs["line"], message = e.split(":")
+            e_specs["col"] = 0
+        else:
+            _, e_specs["line"], e_specs["col"], message = e.split(":", 3)
+
         split_message = message.split("[")
         e_specs["type"] = split_message[-1][:-1]
         e_specs["message"] = "".join(split_message[:-1]).strip()
+        e_specs["full_message"] = e
 
         error_list.append(e_specs)
     
     return error_list
+
+import json
 
 @app.post("/")
 async def root(file: File):
@@ -56,7 +69,7 @@ async def root(file: File):
 
     os.remove("temp.java")
     
-    if result.stderr.decode()[:20] != "Checkstyle ends with":
+    if result.stderr.decode()[:20] != "Checkstyle ends with" and len(result.stderr) != 0:
         raise HTTPException(status_code=422, detail="Provided file could not be parsed.")
-    
+
     return {"errors": parse_error_out(result.stdout.decode())}

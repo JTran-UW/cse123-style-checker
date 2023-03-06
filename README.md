@@ -1,7 +1,7 @@
 # CSE 123 Style Checker
 Automated Code Style Checker for UW CSE 123
 
-This project requires Python 3.6+ and Java 11.
+This project requires Python 3.6+, Java 11, and NPM.
 
 ## Getting started
 
@@ -35,12 +35,20 @@ Run the API
 uvicorn src.api.checkstyle:app --reload
 ```
 
-Access the web app @ 'src/frontend/index.html'
+Open a new terminal, enter the frontend directory, and install and run the dev server
+
+```
+cd src/frontend
+
+npm install
+
+npm run dev
+```
 
 ## Running unit tests
 
 There is currently no suite for running all unit tests, so each chapter must be run separately.  Replace '2' with the appropriate chapter.
 
 ```
-python -m unittest tests.CheckerTestsChapter2.py
+python -m unittest src.api.tests.CheckerTestsChapter2.py
 ```
