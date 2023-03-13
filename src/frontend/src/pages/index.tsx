@@ -14,7 +14,9 @@ interface Error {
 }
 
 export default function Home() {
-  const [errorMessages, setErrorMessages] = useState<React.ReactNode[]>([]);
+  const [errorMessages, setErrorMessages] = useState<React.ReactNode[]>(
+    [<ErrorMessage label="No code in editor" text="Start writing on the right panel" />]
+  );
   const [userCode, setUserCode] = useState<string>("");
 
   async function updateErrorMessages() {
