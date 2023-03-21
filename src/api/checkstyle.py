@@ -7,11 +7,11 @@ import os
 
 class File(BaseModel):
     text: str
+    check_name: str
 
 CS_JAR_PATH = os.getcwd() + "/checkstyle/target/"
 CS_JAR_NAME = "checkstyle-10.7.1-SNAPSHOT-all.jar"
 CS_CHECK_PATH = os.getcwd() + "/checkstyle/src/main/resources/"
-CS_CHECK_NAME = "cse123_checks.xml"
 
 app = FastAPI()
 
@@ -64,7 +64,7 @@ async def root(file: File):
 
     print("=================================================")
     print(file.text)
-    result = subprocess.run(["java", "-jar", CS_JAR_PATH + CS_JAR_NAME, "-c", CS_CHECK_PATH + CS_CHECK_NAME, "temp.java"], capture_output=True)
+    result = subprocess.run(["java", "-jar", CS_JAR_PATH + CS_JAR_NAME, "-c", CS_CHECK_PATH + file.check_name + ".xml", "temp.java"], capture_output=True)
     print(result)
 
     os.remove("temp.java")
